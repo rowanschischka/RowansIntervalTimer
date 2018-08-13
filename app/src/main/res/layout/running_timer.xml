@@ -10,20 +10,28 @@
         android:background="@color/time1"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/stopButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickStop"
-            android:text="@string/stop" />
-
         <TextView
             android:id="@+id/timeText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
             android:textSize="100sp" />
+
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/round_button"
+            android:onClick="onClickStop"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:text="@string/stop"
+            android:textSize="50sp" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
