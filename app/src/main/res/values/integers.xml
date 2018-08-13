@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="MIN1_INDEX">0</integer>
+    <integer name="SEC1_INDEX">1</integer>
+    <integer name="MIN2_INDEX">2</integer>
+    <integer name="SEC2_INDEX">3</integer>
+</resources>

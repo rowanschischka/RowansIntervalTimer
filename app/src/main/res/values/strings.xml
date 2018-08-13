@@ -4,4 +4,10 @@
 <string name="start_button">START</string>
 <string name="interval1">INTERVAL 1</string>
 <string name="interval2">INTERVAL 2</string>
+    <string name="saved_MIN1">MIN1</string>
+    <string name="saved_SEC2">SEC2</string>
+    <string name="saved_MIN2">MIN2</string>
+    <string name="saved_SEC1">SEC1</string>
+    <string name="stop">STOP</string>
+    <string name="saved_time">saved_time</string>
 </resources>
