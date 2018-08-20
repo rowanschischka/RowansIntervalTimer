@@ -21,7 +21,6 @@ import java.util.TimerTask;
 
 public class RunningTimerActivity extends AppCompatActivity {
     private static long startTime;
-    private static int startDelayMilli = 10000;
     private static int currentIntervalTime;
     private static int workIntervalMilli;
     private static int restIntervalMilli;
@@ -96,6 +95,7 @@ public class RunningTimerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         intervalSwitch = true;
+        int startDelayMilli = 10000;
         currentIntervalTime = startDelayMilli;
         startTime = SystemClock.uptimeMillis();
         int updatePeriodUI = 100;
