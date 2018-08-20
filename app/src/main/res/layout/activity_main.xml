@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:id="@+id/min1">
+                android:id="@+id/min_work">
 
             </NumberPicker>
 
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:id="@+id/sec1"></NumberPicker>
+                android:id="@+id/sec_work"></NumberPicker>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:id="@+id/min2"></NumberPicker>
+                android:id="@+id/min_rest"></NumberPicker>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:id="@+id/sec2"></NumberPicker>
+                android:id="@+id/sec_rest"></NumberPicker>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -20,6 +20,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class RunningTimerActivity extends AppCompatActivity {
+    private static long startTime;
+    private static int startDelayMilli = 10000;
+    private static int currentIntervalTime;
+    private static int workIntervalMilli;
+    private static int restIntervalMilli;
+    private static Timer timerWorkInterval;
+    private static Timer timerRestInterval;
+    private static Timer timerUpdateUI;
+    private static boolean intervalSwitch;
     public Handler setTimeTextHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             TextView timeText = findViewById(R.id.timeText);
@@ -30,72 +39,88 @@ public class RunningTimerActivity extends AppCompatActivity {
             timeText.setText(text);
         }
     };
-    int updatePeriod = 100;
-    long startTime;
-    int time1Millis;
-    int time2Millis;
-    int currentIntervalTime;
-    boolean interval = true;
     ToneGenerator tg;
     public Handler switchIntervalHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             LinearLayout layout = findViewById(R.id.runningTimer);
             startTime = SystemClock.uptimeMillis();
-            if (interval) {
-                currentIntervalTime = time2Millis;
-                layout.setBackgroundColor(getResources().getColor(R.color.time2));
+            if (intervalSwitch) {
+                layout.setBackgroundColor(getResources().getColor(R.color.background_work));
+                currentIntervalTime = workIntervalMilli;
                 tg.startTone(ToneGenerator.TONE_PROP_BEEP2);
             } else {
-                currentIntervalTime = time1Millis;
-                layout.setBackgroundColor(getResources().getColor(R.color.time1));
+                layout.setBackgroundColor(getResources().getColor(R.color.background_rest));
+                currentIntervalTime = restIntervalMilli;
                 tg.startTone(ToneGenerator.TONE_PROP_BEEP);
             }
-            interval = !interval;
+            intervalSwitch = !intervalSwitch;
         }
     };
-    Timer timer;
 
     @Override
-    protected void onPause() {
-        timer.cancel();
-        super.onPause();
+    protected void onStop() {
+        timerUpdateUI.cancel();
+        timerWorkInterval.cancel();
+        timerRestInterval.cancel();
+        super.onStop();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.running_timer);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);
 
-        String saved_MIN1 = getString(R.string.saved_MIN1);
-        String saved_SEC1 = getString(R.string.saved_SEC1);
-        String saved_MIN2 = getString(R.string.saved_MIN2);
-        String saved_SEC2 = getString(R.string.saved_SEC2);
+        String saved_work_min = getString(R.string.saved_work_min);
+        String saved_work_sec = getString(R.string.saved_work_sec);
+        String saved_rest_min = getString(R.string.saved_rest_min);
+        String saved_rest_sec = getString(R.string.saved_rest_sec);
 
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.saved_time), Context.MODE_PRIVATE);
-        int min1 = (sharedPref.getInt(saved_MIN1, 0));
-        int sec1 = (sharedPref.getInt(saved_SEC1, 30));
-        time1Millis = (min1 * 60 + sec1) * 1000;
-        int min2 = (sharedPref.getInt(saved_MIN2, 0));
-        int sec2 = (sharedPref.getInt(saved_SEC2, 10));
-        time2Millis = (min2 * 60 + sec2) * 1000;
+        int work_min = (sharedPref.getInt(saved_work_min, 0));
+        int work_sec = (sharedPref.getInt(saved_rest_sec, 30));
+        workIntervalMilli = (work_min * 60 + work_sec) * 1000;
 
-        currentIntervalTime = time1Millis;
+        int rest_min = (sharedPref.getInt(saved_rest_min, 0));
+        int rest_sec = (sharedPref.getInt(saved_work_sec, 10));
+        restIntervalMilli = (rest_min * 60 + rest_sec) * 1000;
 
+        timerUpdateUI = new Timer(true);
+        timerWorkInterval = new Timer(true);
+        timerRestInterval = new Timer(true);
+    }
+
+    @Override
+    protected void onStart() {
+        intervalSwitch = true;
+        currentIntervalTime = startDelayMilli;
         startTime = SystemClock.uptimeMillis();
-
-        TimerTask timerTask = new MyTimerTask();
-        timer = new Timer(true);
-        timer.scheduleAtFixedRate(timerTask, 0, updatePeriod);
+        int updatePeriodUI = 100;
+        TimerTask updateUITimerTask = new UpdateUITimerTask();
+        timerUpdateUI.scheduleAtFixedRate(updateUITimerTask, 0, updatePeriodUI);
+        TimerTask workTimerTask = new SwitchIntervalTimerTask();
+        timerWorkInterval.scheduleAtFixedRate(workTimerTask, startDelayMilli, workIntervalMilli + restIntervalMilli);
+        TimerTask restTimerTask = new SwitchIntervalTimerTask();
+        timerRestInterval.scheduleAtFixedRate(restTimerTask, startDelayMilli + workIntervalMilli, workIntervalMilli + restIntervalMilli);
+        super.onStart();
     }
 
     public void onClickStop(View view) {
         finish();
     }
 
-    private class MyTimerTask extends TimerTask {
+    private class SwitchIntervalTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            switchIntervalHandler.sendEmptyMessage(0);
+        }
+    }
+
+    private class UpdateUITimerTask extends TimerTask {
 
         @Override
         public void run() {
@@ -112,11 +137,9 @@ public class RunningTimerActivity extends AppCompatActivity {
             if (displayTime >= 0) {
                 Message displayMessage = setTimeTextHandler.obtainMessage(0, displayTime);
                 displayMessage.sendToTarget();
-            }
-            //swap time interval
-            if (displayTime <= 0) {
-                Message switchInterval = switchIntervalHandler.obtainMessage();
-                switchInterval.sendToTarget();
+            } else {
+                Message displayMessage = setTimeTextHandler.obtainMessage(0, 0L);
+                displayMessage.sendToTarget();
             }
         }
     }

@@ -7,7 +7,7 @@
         android:id="@+id/runningTimer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/time1"
+        android:background="@color/background_rest"
         android:orientation="vertical">
 
         <TextView

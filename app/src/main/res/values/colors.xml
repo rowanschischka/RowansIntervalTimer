@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="time1">#00FF00</color>
-    <color name="time2">#FF0000</color>
+    <color name="background_work">#00FF00</color>
+    <color name="background_rest">#FF0000</color>
+    <color name="button_background">#FFFFFF</color>
 </resources>

@@ -10,30 +10,30 @@ import android.widget.NumberPicker;
 
 public class MainActivity extends AppCompatActivity {
 
-    NumberPicker NumberPickerMinute1;
-    NumberPicker NumberPickerSecond1;
-    NumberPicker NumberPickerMinute2;
-    NumberPicker NumberPickerSecond2;
+    NumberPicker NumberPickerWorkMinute;
+    NumberPicker NumberPickerWorkSecond;
+    NumberPicker NumberPickerRestMinute;
+    NumberPicker NumberPickerRestSecond;
 
-    String saved_MIN1;
-    String saved_SEC1;
-    String saved_MIN2;
-    String saved_SEC2;
+    String savedMinWork;
+    String savedSecWork;
+    String SavedMinRest;
+    String savedSevRest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        saved_MIN1 = getString(R.string.saved_MIN1);
-        saved_SEC1 = getString(R.string.saved_SEC1);
-        saved_MIN2 = getString(R.string.saved_MIN2);
-        saved_SEC2 = getString(R.string.saved_SEC2);
+        savedMinWork = getString(R.string.saved_work_min);
+        savedSecWork = getString(R.string.saved_rest_sec);
+        SavedMinRest = getString(R.string.saved_rest_min);
+        savedSevRest = getString(R.string.saved_work_sec);
         NumberPicker intervalValues[] = {
-                NumberPickerMinute1 = findViewById(R.id.min1),
-                NumberPickerSecond1 = findViewById(R.id.sec1),
-                NumberPickerMinute2 = findViewById(R.id.min2),
-                NumberPickerSecond2 = findViewById(R.id.sec2),
+                NumberPickerWorkMinute = findViewById(R.id.min_work),
+                NumberPickerWorkSecond = findViewById(R.id.sec_work),
+                NumberPickerRestMinute = findViewById(R.id.min_rest),
+                NumberPickerRestSecond = findViewById(R.id.sec_rest),
         };
 
         for (NumberPicker np : intervalValues) {
@@ -42,22 +42,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.saved_time), Context.MODE_PRIVATE);
-        NumberPickerMinute1.setValue(sharedPref.getInt(saved_MIN1, 0));
-        NumberPickerSecond1.setValue(sharedPref.getInt(saved_SEC1, 30));
-        NumberPickerMinute2.setValue(sharedPref.getInt(saved_MIN2, 0));
-        NumberPickerSecond2.setValue(sharedPref.getInt(saved_SEC2, 10));
+        NumberPickerWorkMinute.setValue(sharedPref.getInt(savedMinWork, 0));
+        NumberPickerWorkSecond.setValue(sharedPref.getInt(savedSecWork, 30));
+        NumberPickerRestMinute.setValue(sharedPref.getInt(SavedMinRest, 0));
+        NumberPickerRestSecond.setValue(sharedPref.getInt(savedSevRest, 10));
     }
 
     public void onClickStart(View view) {
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.saved_time), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(saved_MIN1, NumberPickerMinute1.getValue());
+        editor.putInt(savedMinWork, NumberPickerWorkMinute.getValue());
         //editor.apply();
-        editor.putInt(saved_SEC1, NumberPickerSecond1.getValue());
+        editor.putInt(savedSecWork, NumberPickerWorkSecond.getValue());
         //editor.apply();
-        editor.putInt(saved_MIN2, NumberPickerMinute2.getValue());
+        editor.putInt(SavedMinRest, NumberPickerRestMinute.getValue());
         //editor.apply();
-        editor.putInt(saved_SEC2, NumberPickerSecond2.getValue());
+        editor.putInt(savedSevRest, NumberPickerRestSecond.getValue());
         editor.apply();
 
         Intent myIntent = new Intent(MainActivity.this, RunningTimerActivity.class);
