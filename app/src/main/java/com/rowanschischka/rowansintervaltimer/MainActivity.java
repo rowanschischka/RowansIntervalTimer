@@ -10,15 +10,15 @@ import android.widget.NumberPicker;
 
 public class MainActivity extends AppCompatActivity {
 
-    NumberPicker NumberPickerWorkMinute;
-    NumberPicker NumberPickerWorkSecond;
-    NumberPicker NumberPickerRestMinute;
-    NumberPicker NumberPickerRestSecond;
+    private NumberPicker NumberPickerWorkMinute;
+    private NumberPicker NumberPickerWorkSecond;
+    private NumberPicker NumberPickerRestMinute;
+    private NumberPicker NumberPickerRestSecond;
 
-    String savedMinWork;
-    String savedSecWork;
-    String SavedMinRest;
-    String savedSevRest;
+    private String savedMinWork;
+    private String savedSecWork;
+    private String SavedMinRest;
+    private String savedSevRest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
