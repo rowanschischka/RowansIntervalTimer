@@ -23,15 +23,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:background="@drawable/round_button"
             android:onClick="onClickStop"
             android:paddingBottom="5dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:paddingTop="5dp"
-            android:text="@string/stop"
-            android:textSize="50sp" />
+            android:text="@string/stop" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

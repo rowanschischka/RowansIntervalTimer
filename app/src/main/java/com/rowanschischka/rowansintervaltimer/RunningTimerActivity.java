@@ -28,13 +28,15 @@ public class RunningTimerActivity extends AppCompatActivity {
     private static Timer timerRestInterval;
     private static Timer timerUpdateUI;
     private static boolean intervalSwitch;
+
     public Handler setTimeTextHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             TextView timeText = findViewById(R.id.timeText);
             long time = (long) msg.obj;
             long seconds = time / 1000;
-            long milli = (time - seconds * 1000) / 100;
-            String text = seconds + "." + milli;
+            //long milli = (time - seconds * 1000) / 100;
+            //String text = seconds + "." + milli;
+            String text = seconds + "";
             timeText.setText(text);
         }
     };
